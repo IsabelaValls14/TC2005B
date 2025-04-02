@@ -1,9 +1,11 @@
 /*
- * Collection of classes that will be used in the games
+ * General classes that can be useful for a game
  *
  * Gilberto Echeverria
- * 2025-02-25
+ * 2025-01-22
  */
+
+"use strict";
 
 class Vec {
     constructor(x, y) {
@@ -19,35 +21,15 @@ class Vec {
         return new Vec(this.x - other.x, this.y - other.y);
     }
 
-    times(scalar) {
-        return new Vec(this.x * scalar, this.y * scalar);
+    times(factor) {
+        return new Vec(this.x * factor, this.y * factor);
     }
 
-    magnitude() {
+    get length() {
         return Math.sqrt(this.x ** 2 + this.y ** 2);
-    }
-
-    normalize() {
-        const mag = this.magnitude();
-        if (mag == 0) {
-            return new Vec(0, 0);
-        }
-        return new Vec(this.x / mag, this.y / mag);
     }
 }
 
-
-/*
- * Test the Vector class
- */
-//let p = new Vec(0, 8);
-//let v = new Vec(1, 1);
-//p = p.plus(v.times(1));
-//console.log("New position: ", p);
-//console.log("plus: ", p.plus(v));
-//console.log("minus: ", p.minus(v));
-//console.log("times: ", p.times(3));
-//console.log("magnitude: ", p.magnitude());
 
 class Rect {
     constructor(x, y, width, height) {
@@ -60,10 +42,9 @@ class Rect {
 
 
 class GameObject {
-    constructor(position, width, height, color, type) {
-        this.position = position;
-        this.width = width;
-        this.height = height;
+    constructor(color, width, height, x, y, type) {
+        this.position = new Vec(x, y);
+        this.size = new Vec(width, height);
         this.color = color;
         this.type = type;
 
@@ -80,47 +61,42 @@ class GameObject {
         }
     }
 
-    draw(ctx) {
-
+    draw(ctx, scale) {
         if (this.spriteImage) {
+            // Draw a sprite if the object has one defined
             if (this.spriteRect) {
                 ctx.drawImage(this.spriteImage,
                               this.spriteRect.x * this.spriteRect.width,
                               this.spriteRect.y * this.spriteRect.height,
                               this.spriteRect.width, this.spriteRect.height,
-                              this.position.x, this.position.y,
-                              this.width, this.height);
+                              this.position.x * scale, this.position.y * scale,
+                              this.size.x * scale, this.size.y * scale);
             } else {
                 ctx.drawImage(this.spriteImage,
-                              this.position.x, this.position.y,
-                              this.width, this.height);
-                              //this.position.x * scale, this.position.y * scale,
-                              //this.width * scale, this.height * scale);
+                              this.position.x * scale, this.position.y * scale,
+                              this.size.x * scale, this.size.y * scale);
             }
         } else {
+            // If there is no sprite asociated, just draw a color square
             ctx.fillStyle = this.color;
-            ctx.fillRect(this.position.x, this.position.y,
-                         this.width, this.height);
+            ctx.fillRect(this.position.x * scale, this.position.y * scale,
+                         this.size.x * scale, this.size.y * scale);
         }
     }
 
-    // Empty template for all GameObjects to be able to update
     update() {
 
     }
 }
 
-
-// Update 2025-03-12
-// Class to control the animation of characters and objects
 class AnimatedObject extends GameObject {
-    constructor(position, width, height, color, type, sheetCols) {
-        super(position, width, height, color, type);
+    constructor(color, width, height, x, y, type) {
+        super(color, width, height, x, y, type);
         // Animation properties
         this.frame = 0;
         this.minFrame = 0;
         this.maxFrame = 0;
-        this.sheetCols = sheetCols;
+        this.sheetCols = 0;
 
         this.repeat = true;
 
@@ -152,6 +128,7 @@ class AnimatedObject extends GameObject {
     }
 }
 
+
 class TextLabel {
     constructor(x, y, font, color) {
         this.x = x;
@@ -168,14 +145,10 @@ class TextLabel {
 }
 
 
-// Detect a collision of two box objects
-function boxOverlap(obj1, obj2) {
-    return obj1.position.x + obj1.width > obj2.position.x &&
-           obj1.position.x < obj2.position.x + obj2.width &&
-           obj1.position.y + obj1.height > obj2.position.y &&
-           obj1.position.y < obj2.position.y + obj2.height;
-}
-
-function randomRange(size, start) {
-    return Math.floor(Math.random() * size) + ((start === undefined) ? 0 : start);
+// Simple collision detection between rectangles
+function overlapRectangles(actor1, actor2) {
+    return actor1.position.x + actor1.size.x > actor2.position.x &&
+           actor1.position.x < actor2.position.x + actor2.size.x &&
+           actor1.position.y + actor1.size.y > actor2.position.y &&
+           actor1.position.y < actor2.position.y + actor2.size.y;
 }
