@@ -7,14 +7,6 @@
 
 "use strict";
 
-function area(base, height) {
-    let area = base * height / 2;
-    return area;
-}
-
-console.log( area(4, 7) );
-
-
 export function firstNonRepeating(string) {
     for (let i=0; i<string.length; i++) {
         let repeated = false;
