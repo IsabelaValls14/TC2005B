@@ -111,156 +111,59 @@ export function mcd(a, b) {
 
 // Crea una función llamada hackerSpeak que cambie una cadena de texto a 'Hacker Speak'. 
 // Por ejemplo, para la cadena 'Javascript es divertido', su hacker speak es: 'J4v45c1pt 35 d1v3rt1d0'.
-export function hackerSpeak(texto) {
-        const mapa = {
-        'a': '4',
-        'e': '3',
-        'i': '1',
-        'o': '0',
-        's': '5'
-    };
-
-    return texto
-        .split('')
-        .map(char => {
-            const lowerChar = char.toLowerCase();
-            return mapa[lowerChar] ? mapa[lowerChar] : char;
-        })
-        .join(''); 
+export function hackerSpeak() {
+    
+    
 }
 
 // Escribe una función llamada factorize que reciba un número, y regrese una lista con todos sus factores. Por ejemplo:
 // factorize(12) -> [1, 2, 3, 4, 6, 12].
-export function factorize(num) {
-    const factores = [];
-    
-    for (let i = 1; i <= num; i++) {
-        if (num % i === 0) {
-            factores.push(i);
-        }
-    }
+export function factorize() {
 
-    return factores;
 }
 // Escribe una función llamada deduplicate que quite los elementos duplicados de un arreglo y regrese
 //  una lista con los elementos que quedan.Por ejemplo:
 //  deduplicate([1, 0, 1, 1, 0, 0]) -> [1, 0]
-export function deduplicate(arr) {
-    return [...new Set(arr)];
+export function deduplicate() {
+    
 }
 
 // Escribe una función llamada findShortestString que reciba como parámetro una lista de cadenas de texto,
 //     y regrese la longitud de la cadena más corta.
-
-export function findShortestString(cadenas) {
-    if (cadenas.length === 0) return 0;
-
-    let minLength = cadenas[0].length;
-
-    for (let i = 1; i < cadenas.length; i++) {
-        if (cadenas[i].length < minLength) {
-            minLength = cadenas[i].length;
-        }
-    }
-
-    return minLength;
+export function findShortestString() {
+    
 }
+
 // Escribe una función llamada isPalindrome que revise si una cadena de texto es un palíndromo o no.
-export function isPalindrome(arr) {
-    if (arr.length == 0) {
-        return true;
-    }
-    let left = 0;
-    let right =  arr.length - 1;
+export function isPalinfrome(){
 
-    while (left < right) {
-        if (arr[left] != arr[right]) {
-            return false
-        }
-
-        left++;
-        right--;
-    }
-    return true;
 }
 // Escribe una función llamada sortStrings que tome una lista de cadena de textos y devuelva una nueva
 //  lista con todas las cadenas en orden alfabético.
-export function sortStrings(strings) {
-    return strings.sort();
+export function sortStrings() {
+    
 }
 
 // Escribe una función llamada stats que tome una lista de números y devuelva una lista con dos elementos: la mediana y 
 // la moda. Por ejemplo:  stats([8, 4, 2, 6, 8, 13, 17, 2, 4, 8]) -> [ 7.2, 8 ]
-export function stats(arr) {
-    if (arr.length == 0) {
-        return [0, 0];
-    }
-
-    let res = [];
-    let suma = 0, promedio = 0, contador = 0;
-
-    for (let i=0; i<arr.length; i++) {
-        suma = suma + arr[i];
-    }
-    promedio = suma / arr.length;
-    res.push(promedio);
-
-    const elementos_unicos = new Map();
-
-    for (let i = 0; i < arr.length; i++) {
-        if (elementos_unicos.has(arr[i])) {
-            elementos_unicos.set(arr[i], elementos_unicos.get(arr[i]) + 1);
-        } else {
-            elementos_unicos.set(arr[i], 1);
-        }
-    }
-
-    let maxKey = null;
-    let maxValue = 0;
-
-    for (const [key, value] of elementos_unicos) {
-        if (value > maxValue) {
-            maxValue = value;
-            maxKey = key;
-        }
-    }
-    res.push(maxKey);
-    return res;
+export function stats() {
+    
 }
-
-
-
 
 // Escribe una función llamada popularString que tome una lista de cadenas de texto y devuelva la cadena más frecuente.
-export function popularString(strings) {
-    if (!Array.isArray(strings) || strings.length === 0) return "";
-
-    const counts = {};
-    let maxCount = 0;
-    let mostPopular = "";
-
-    for (const str of strings) {
-        counts[str] = (counts[str] || 0) + 1;
-
-        if (counts[str] > maxCount) {
-            maxCount = counts[str];
-            mostPopular = str;
-        }
-    }
-
-    return mostPopular;
+export function popularString() {
+    
 }
-
 
 // Escribe una función llamada isPowerOf2 que tome un número y devuelva verdadero si es una potencia de dos, falso de lo contrario.
-export function isPowerOf2(n) {
-       if (n < 1) return false;
-    return (n & (n - 1)) === 0;
+export function isPowerOf2() {
+    
 }
 // Escribe una función llamada sortDescending que tome una lista de números y devuelva una nueva lista con todos los números en orden descendente.
-export function sortDescending(num) {
-    if (!Array.isArray(num)) return [];
-
-    return [...num].sort((a, b) => b - a);
+export function sortDescending() {
+    
 }
+
+// Puedes utilizar el archivo de prueba en el repositorio del curso para validar tus funciones. Entra al directorio 'JavaScript', y usa el comando:
+
 // npm test test/tc2005b_test.js
